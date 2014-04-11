@@ -46,9 +46,9 @@
   </developers>
 
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/branding</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/branding</developerConnection>
-    <url>http://svn.sonar-plugins.codehaus.org</url>
+    <connection>scm:git:git@github.com:SonarCommunity/sonar-branding.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-branding.git</developerConnection>
+    <url>https://github.com/SonarCommunity/sonar-branding</url>
   </scm>
   <issueManagement>
     <system>JIRA</system>
