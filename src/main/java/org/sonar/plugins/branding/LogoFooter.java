@@ -28,7 +28,7 @@ import org.sonar.api.web.Footer;
 
 public class LogoFooter implements Footer {
 
-  private final Logger logger = LoggerFactory.getLogger(LogoFooter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LogoFooter.class);
 
   private final Configuration configuration;
 
@@ -43,7 +43,7 @@ public class LogoFooter implements Footer {
   private Integer getImageWidth() {
     return configuration.getInt(BrandingPlugin.IMAGE_WIDTH, 0);
   }
-  
+
   private Integer getImageHeight() {
     return configuration.getInt(BrandingPlugin.IMAGE_HEIGHT, 0);
   }
@@ -57,8 +57,8 @@ public class LogoFooter implements Footer {
     LogoLocation location;
     try {
       location = LogoLocation.valueOf(locationStr);
-    } catch (IllegalArgumentException e) {
-      logger.warn("Invalid value for property " + BrandingPlugin.LOGO_LOCATION_PROPERTY + ". Using TOP as default.");
+    } catch (IllegalArgumentException e) { // NOSONAR
+      LOGGER.warn("Invalid value for property " + BrandingPlugin.LOGO_LOCATION_PROPERTY + ". Using TOP as default.");
       location = LogoLocation.TOP;
     }
     return location;
@@ -73,41 +73,42 @@ public class LogoFooter implements Footer {
       return "";
     }
 
-    StringBuffer sb = new StringBuffer();
-    sb.append("<script type=\"text/javascript\">\n");
-    sb.append("    Event.observe(window, 'load', function(){\n");
+    StringBuilder sb = new StringBuilder();
 
-    sb.append("        var companyLogo = document.createElement('img');\n");
-    sb.append("        companyLogo.setAttribute('src', '").append(imageUrl).append("');\n");
-    if (imageHeight > 0){
-      sb.append("        companyLogo.setAttribute('height', ").append(imageHeight).append(");\n");
+    sb.append("<script>\n");
+    sb.append("    $j(document).ready(function() {\n");
+
+    sb.append("        var companyLogo = $j('<img>');\n");
+    sb.append("        companyLogo.attr('src', '").append(imageUrl).append("');\n");
+    if (imageHeight > 0) {
+      sb.append("        companyLogo.attr('height', ").append(imageHeight).append(");\n");
     }
-    if (imageWidth > 0){
-      sb.append("        companyLogo.setAttribute('width', ").append(imageWidth).append(");\n");
+    if (imageWidth > 0) {
+      sb.append("        companyLogo.attr('width', ").append(imageWidth).append(");\n");
     }
-    sb.append("        companyLogo.setAttribute('alt', '');\n");
-    sb.append("        companyLogo.setAttribute('title', '');\n");
+    sb.append("        companyLogo.attr('alt', '');\n");
+    sb.append("        companyLogo.attr('title', '');\n");
 
     String linkUrl = getLinkUrl();
     if (!StringUtils.isEmpty(linkUrl)) {
-      sb.append("        var companyUrl = document.createElement('a');\n");
-      sb.append("        companyUrl.setAttribute('href', '").append(linkUrl).append("');\n");
-      sb.append("        companyUrl.appendChild(companyLogo);\n");
+      sb.append("        var companyUrl = $j('<a>');\n");
+      sb.append("        companyUrl.attr('href', '").append(linkUrl).append("');\n");
+      sb.append("        companyUrl.append(companyLogo);\n");
       sb.append("        companyLogo = companyUrl;\n");
     }
 
     switch (getLogoLocation()) {
-      case TOP :
-        sb.append("        var sonarContent = $$('div[id=\"error\"]').first().parentNode;\n");
-        sb.append("        sonarContent.insertBefore(companyLogo, sonarContent.firstChild);\n");
+      case TOP:
+        sb.append("        var sonarContent = $j(\"#error\").first().parent();\n");
+        sb.append("        sonarContent.first().before(companyLogo);\n");
         break;
-      case MENU :
-        sb.append("        var sonarLogo = $$('img[title=\"Embrace Quality\"]').first();\n");
-        sb.append("        var center = $($(sonarLogo.parentNode).parentNode);\n");
-        sb.append("        center.appendChild(companyLogo);\n");
+      case MENU:
+        sb.append("        var sonarLogo = $j(\"[title='Embrace Quality']\").first();\n");
+        sb.append("        var center = sonarLogo.parent().parent();\n");
+        sb.append("        center.append(companyLogo);\n");
         break;
       default:
-        logger.warn("Location no supported");
+        LOGGER.warn("Location no supported");
     }
     sb.append("    });\n");
     sb.append("</script>\n");

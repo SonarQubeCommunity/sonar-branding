@@ -49,7 +49,7 @@ public class LogoFooterTest {
   public void shouldCreateFooterDefaultLocation() {
     conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
     String html = footer.getHtml();
-    assertThat(html, containsString("div[id=\"error\"]"));
+    assertThat(html, containsString("$j(\"#error\")"));
     assertThat(html, containsString("http://example.org/logo.png"));
   }
 
@@ -57,21 +57,22 @@ public class LogoFooterTest {
   public void shouldCreateFooterTopLocation() {
     conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
     conf.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "TOP");
-    assertThat(footer.getHtml(), containsString("div[id=\"error\"]"));
+    assertThat(footer.getHtml(), containsString("$j(\"#error\")"));
   }
 
   @Test
   public void shouldCreateFooterMenuLocation() {
     conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
     conf.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "MENU");
-    assertThat(footer.getHtml(), containsString("img[title=\"Embrace Quality\"]"));
+    assertThat(footer.getHtml(), containsString("$j(\"[title='Embrace Quality']\")"));
   }
 
   @Test
   public void shouldCreateFooterInvalidLocation() {
     conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
     conf.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "foo");
-    assertThat(footer.getHtml(), containsString("div[id=\"error\"]"));
+    System.out.println(footer.getHtml());
+    assertThat(footer.getHtml(), containsString("$j(\"#error\")"));
   }
 
   @Test
@@ -91,7 +92,7 @@ public class LogoFooterTest {
     assertThat(html, containsString("height"));
     assertThat(html, containsString("20"));
   }
-  
+
   @Test
   public void shouldSetImageWieght() {
     conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
@@ -101,13 +102,14 @@ public class LogoFooterTest {
     assertThat(html, containsString("80"));
   }
 
-  @Test(expected=org.apache.commons.configuration.ConversionException.class)
+  @Test(expected = org.apache.commons.configuration.ConversionException.class)
   public void shouldThrowConversionExceptionIfWidthIsInvalid() {
     conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
     conf.setProperty(BrandingPlugin.IMAGE_WIDTH, "invalid");
     footer.getHtml();
   }
-  @Test(expected=org.apache.commons.configuration.ConversionException.class)
+
+  @Test(expected = org.apache.commons.configuration.ConversionException.class)
   public void shouldThrowConversionExceptionIfHeightIsInvalid() {
     conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
     conf.setProperty(BrandingPlugin.IMAGE_HEIGHT, "invalid");
