@@ -105,6 +105,8 @@ public class LogoFooter implements Footer {
       case MENU:
         sb.append("        var sonarLogo = $j(\"[title='Embrace Quality']\").first();\n");
         sb.append("        var center = sonarLogo.parent().parent();\n");
+        // Add a margin to separate the 2 logos - SONARPLUGINS-3022
+        sb.append("        companyLogo.attr('style', 'margin-top: 10px');\n");
         sb.append("        center.append(companyLogo);\n");
         break;
       default:
