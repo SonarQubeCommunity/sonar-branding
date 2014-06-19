@@ -22,6 +22,7 @@ package org.sonar.plugins.branding;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.sonar.api.Properties;
 import org.sonar.api.Property;
 import org.sonar.api.SonarPlugin;
@@ -31,13 +32,13 @@ import org.sonar.api.SonarPlugin;
     name = "Image URL",
     description = "Example : http://codehaus.org/codehaus-small.gif"),
   @Property(key = BrandingPlugin.IMAGE_WIDTH,
-    type=org.sonar.api.PropertyType.INTEGER,
+    type = org.sonar.api.PropertyType.INTEGER,
     name = "Image width in pixels",
     description = "If empty or zero image is displayed in default width. Example : 80",
     defaultValue = "0"),
   @Property(key = BrandingPlugin.IMAGE_HEIGHT,
     name = "Image height in pixels",
-    type=org.sonar.api.PropertyType.INTEGER,
+    type = org.sonar.api.PropertyType.INTEGER,
     description = "If empty or zero image is displayed in default height. Example : 80",
     defaultValue = "0"),
   @Property(key = BrandingPlugin.LINK_PROPERTY,
@@ -45,7 +46,7 @@ import org.sonar.api.SonarPlugin;
     description = "Example : http://codehaus.org/"),
   @Property(key = BrandingPlugin.LOGO_LOCATION_PROPERTY,
     name = "Logo location in Sonar UI",
-    description = "Possible values: TOP, MENU", defaultValue = "TOP") })
+    description = "Possible values: TOP, MENU", defaultValue = "TOP")})
 public class BrandingPlugin extends SonarPlugin {
 
   public static final String IMAGE_PROPERTY = "sonar.branding.image";
