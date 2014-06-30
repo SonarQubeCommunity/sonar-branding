@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>sonar-branding-plugin</artifactId>
-  <version>0.5</version>
+  <version>0.6-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Sonar Branding Plugin</name>
@@ -49,7 +49,7 @@
     <connection>scm:git:git@github.com:SonarCommunity/sonar-branding.git</connection>
     <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-branding.git</developerConnection>
     <url>https://github.com/SonarCommunity/sonar-branding</url>
-    <tag>0.5</tag>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>JIRA</system>
