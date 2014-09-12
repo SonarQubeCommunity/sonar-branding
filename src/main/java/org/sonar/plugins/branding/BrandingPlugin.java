@@ -20,12 +20,13 @@
 
 package org.sonar.plugins.branding;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.sonar.api.Properties;
 import org.sonar.api.Property;
+import org.sonar.api.PropertyType;
 import org.sonar.api.SonarPlugin;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Properties({
   @Property(key = BrandingPlugin.IMAGE_PROPERTY,
@@ -46,6 +47,8 @@ import org.sonar.api.SonarPlugin;
     description = "Example : http://codehaus.org/"),
   @Property(key = BrandingPlugin.LOGO_LOCATION_PROPERTY,
     name = "Logo location in Sonar UI",
+    type = PropertyType.SINGLE_SELECT_LIST,
+    options = {"TOP", "MENU"},
     description = "Possible values: TOP, MENU", defaultValue = "TOP")})
 public class BrandingPlugin extends SonarPlugin {
 

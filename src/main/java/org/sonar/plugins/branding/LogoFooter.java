@@ -20,40 +20,39 @@
 
 package org.sonar.plugins.branding;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.config.Settings;
 import org.sonar.api.web.Footer;
 
 public class LogoFooter implements Footer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LogoFooter.class);
+  private final Settings settings;
 
-  private final Configuration configuration;
-
-  public LogoFooter(Configuration configuration) {
-    this.configuration = configuration;
+  public LogoFooter(Settings settings) {
+    this.settings = settings;
   }
 
   private String getImageUrl() {
-    return configuration.getString(BrandingPlugin.IMAGE_PROPERTY, "");
+    return settings.getString(BrandingPlugin.IMAGE_PROPERTY);
   }
 
   private Integer getImageWidth() {
-    return configuration.getInt(BrandingPlugin.IMAGE_WIDTH, 0);
+    return settings.getInt(BrandingPlugin.IMAGE_WIDTH);
   }
 
   private Integer getImageHeight() {
-    return configuration.getInt(BrandingPlugin.IMAGE_HEIGHT, 0);
+    return settings.getInt(BrandingPlugin.IMAGE_HEIGHT);
   }
 
   private String getLinkUrl() {
-    return configuration.getString(BrandingPlugin.LINK_PROPERTY, "");
+    return settings.getString(BrandingPlugin.LINK_PROPERTY);
   }
 
   private LogoLocation getLogoLocation() {
-    String locationStr = configuration.getString(BrandingPlugin.LOGO_LOCATION_PROPERTY, "TOP");
+    String locationStr = settings.getString(BrandingPlugin.LOGO_LOCATION_PROPERTY);
     LogoLocation location;
     try {
       location = LogoLocation.valueOf(locationStr);

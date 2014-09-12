@@ -20,24 +20,24 @@
 
 package org.sonar.plugins.branding;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.sonar.api.config.PropertyDefinitions;
+import org.sonar.api.config.Settings;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.apache.commons.configuration.BaseConfiguration;
-import org.apache.commons.configuration.Configuration;
-import org.junit.Before;
-import org.junit.Test;
-
 public class LogoFooterTest {
 
-  private Configuration conf;
+  private Settings settings;
   private LogoFooter footer;
 
   @Before
   public void setUp() {
-    conf = new BaseConfiguration();
-    footer = new LogoFooter(conf);
+    settings = new Settings(new PropertyDefinitions(BrandingPlugin.class));
+    footer = new LogoFooter(settings);
   }
 
   @Test
@@ -47,7 +47,7 @@ public class LogoFooterTest {
 
   @Test
   public void shouldCreateFooterDefaultLocation() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
     String html = footer.getHtml();
     assertThat(html, containsString("$j(\"#error\")"));
     assertThat(html, containsString("http://example.org/logo.png"));
@@ -55,30 +55,30 @@ public class LogoFooterTest {
 
   @Test
   public void shouldCreateFooterTopLocation() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
-    conf.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "TOP");
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
+    settings.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "TOP");
     assertThat(footer.getHtml(), containsString("$j(\"#error\")"));
   }
 
   @Test
   public void shouldCreateFooterMenuLocation() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
-    conf.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "MENU");
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
+    settings.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "MENU");
     assertThat(footer.getHtml(), containsString("$j(\"[title='Embrace Quality']\")"));
   }
 
   @Test
   public void shouldCreateFooterInvalidLocation() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
-    conf.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "foo");
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://example.org/logo.png");
+    settings.setProperty(BrandingPlugin.LOGO_LOCATION_PROPERTY, "foo");
     System.out.println(footer.getHtml());
     assertThat(footer.getHtml(), containsString("$j(\"#error\")"));
   }
 
   @Test
   public void shouldCreateCompanyLogoWithLink() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
-    conf.setProperty(BrandingPlugin.LINK_PROPERTY, "http://example.org/");
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
+    settings.setProperty(BrandingPlugin.LINK_PROPERTY, "http://example.org/");
     String html = footer.getHtml();
     assertThat(html, containsString("companyUrl"));
     assertThat(html, containsString("http://example.org/"));
@@ -86,8 +86,8 @@ public class LogoFooterTest {
 
   @Test
   public void shouldSetImageHeight() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
-    conf.setProperty(BrandingPlugin.IMAGE_HEIGHT, 20);
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
+    settings.setProperty(BrandingPlugin.IMAGE_HEIGHT, 20);
     String html = footer.getHtml();
     assertThat(html, containsString("height"));
     assertThat(html, containsString("20"));
@@ -95,24 +95,24 @@ public class LogoFooterTest {
 
   @Test
   public void shouldSetImageWieght() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
-    conf.setProperty(BrandingPlugin.IMAGE_WIDTH, 80);
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
+    settings.setProperty(BrandingPlugin.IMAGE_WIDTH, 80);
     String html = footer.getHtml();
     assertThat(html, containsString("width"));
     assertThat(html, containsString("80"));
   }
 
-  @Test(expected = org.apache.commons.configuration.ConversionException.class)
+  @Test(expected = NumberFormatException.class)
   public void shouldThrowConversionExceptionIfWidthIsInvalid() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
-    conf.setProperty(BrandingPlugin.IMAGE_WIDTH, "invalid");
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
+    settings.setProperty(BrandingPlugin.IMAGE_WIDTH, "invalid");
     footer.getHtml();
   }
 
-  @Test(expected = org.apache.commons.configuration.ConversionException.class)
+  @Test(expected = NumberFormatException.class)
   public void shouldThrowConversionExceptionIfHeightIsInvalid() {
-    conf.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
-    conf.setProperty(BrandingPlugin.IMAGE_HEIGHT, "invalid");
+    settings.setProperty(BrandingPlugin.IMAGE_PROPERTY, "http://images.example.org/logo.png");
+    settings.setProperty(BrandingPlugin.IMAGE_HEIGHT, "invalid");
     footer.getHtml();
   }
 
