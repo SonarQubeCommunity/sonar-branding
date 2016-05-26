@@ -2,6 +2,8 @@ Branding Plugin
 ===============
 [![Build Status](https://api.travis-ci.org/SonarQubeCommunity/sonar-branding.svg)](https://travis-ci.org/SonarQubeCommunity/sonar-branding)
 
+Version and download information: http://update.sonarsource.org/plugins/branding-confluence.html
+
 ## Description / Features
 The plugin allows you to add your own company logo to the SonarQubeUI. Two locations are supported, TOP and MENU.
 
