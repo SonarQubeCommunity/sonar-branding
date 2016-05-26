@@ -13,7 +13,6 @@
 
   <name>Sonar Branding Plugin</name>
   <description>Allows to add your own logo to the SonarQube UI.</description>
-  <url>http://docs.codehaus.org/display/SONAR/Branding+Plugin</url>
   <inceptionYear>2011</inceptionYear>
   <organization>
     <name>SonarSource</name>
@@ -46,19 +45,15 @@
   </developers>
 
   <scm>
-    <connection>scm:git:git@github.com:SonarCommunity/sonar-branding.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-branding.git</developerConnection>
-    <url>https://github.com/SonarCommunity/sonar-branding</url>
+    <connection>scm:git:git@github.com:SonarQubeCommunity/sonar-branding.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarQubeCommunity/sonar-branding.git</developerConnection>
+    <url>https://github.com/SonarQubeCommunity/sonar-branding</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
-    <system>JIRA</system>
-    <url>http://jira.codehaus.org/browse/SONARPLUGINS/component/14663</url>
+    <system>GitHub Issues</system>
+    <url>https://github.com/SonarQubeCommunity/sonar-branding/issues</url>
   </issueManagement>
-  <ciManagement>
-    <system>Bamboo</system>
-    <url>http://ci.codehaus.org/browse/SONAR-BRANDING</url>
-  </ciManagement>
 
   <properties>
     <sonar.version>3.7</sonar.version>
