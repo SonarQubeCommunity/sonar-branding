@@ -13,6 +13,7 @@
 
   <name>Sonar Branding Plugin</name>
   <description>Allows to add your own logo to the SonarQube UI.</description>
+  <url>https://github.com/SonarQubeCommunity/sonar-branding</url>
   <inceptionYear>2011</inceptionYear>
   <organization>
     <name>SonarSource</name>
